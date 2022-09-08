@@ -7,19 +7,19 @@ public class Library {
         Book book3 = new Book("Core Java", 200);
         Book book4 = new Book("Java 8 The Complete Reference", 500);
         Book[] books = {book1, book2, book3, book4};
-        for (int index = 0; index < 4; index++) {
+        for (int index = 0; index < books.length; index++) {
             System.out.println("Book " + books[index].getName() + ", pages " + books[index].getPages());
         }
         Book tempBook = books[0];
         books[0] = books[3];
         books[3] = tempBook;
         System.out.println("Changed books:");
-        for (int index = 0; index < 4; index++) {
+        for (int index = 0; index < books.length; index++) {
             System.out.println("Book " + books[index].getName() + ", pages " + books[index].getPages());
         }
         System.out.println("Books \"Clean code\":");
-        for (int index = 0; index < 4; index++) {
-            if (books[index].getName().equals("Clean code")) {
+        for (int index = 0; index < books.length; index++) {
+            if ("Clean code".equals(books[index].getName())) {
                 System.out.println("Book " + books[index].getName() + ", pages " + books[index].getPages());
             }
         }
