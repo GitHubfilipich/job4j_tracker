@@ -14,28 +14,30 @@ public class PasswordValidator {
         if (password.toUpperCase().equals(password)) {
             throw new IllegalArgumentException("Password should contain at least one lowercase letter");
         }
-        for (int i = 0;; i++) {
+        boolean containFigure = false;
+        boolean containSpecialSymbol = false;
+        for (int i = 0; i < password.length(); i++) {
             if (Character.isDigit(password.charAt(i))) {
-                break;
+                containFigure = true;
             }
-            if (i == password.length() - 1) {
-                throw new IllegalArgumentException("Password should contain at least one figure");
-            }
-        }
-        for (int i = 0;; i++) {
             if (!Character.isLetterOrDigit(password.charAt(i)) && !Character.isWhitespace(password.charAt(i))) {
+                containSpecialSymbol = true;
+            }
+            if (containFigure && containSpecialSymbol) {
                 break;
             }
-            if (i == password.length() - 1) {
-                throw new IllegalArgumentException("Password should contain at least one special symbol");
-            }
         }
-        if (password.toUpperCase().contains("QWERTY")
-                || password.contains("12345")
-                || password.toUpperCase().contains("PASSWORD")
-                || password.toUpperCase().contains("ADMIN")
-                || password.toUpperCase().contains("USER")) {
-            throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
+        if (!containFigure) {
+            throw new IllegalArgumentException("Password should contain at least one figure");
+        }
+        if (!containSpecialSymbol) {
+            throw new IllegalArgumentException("Password should contain at least one special symbol");
+        }
+        String[] words = {"QWERTY", "12345", "PASSWORD", "ADMIN", "USER"};
+        for (String word : words) {
+            if (password.toUpperCase().contains(word)) {
+                throw new IllegalArgumentException("Password shouldn't contain substrings: qwerty, 12345, password, admin, user");
+            }
         }
         return password;
     }
