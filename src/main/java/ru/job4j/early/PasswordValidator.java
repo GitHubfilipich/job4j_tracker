@@ -16,11 +16,11 @@ public class PasswordValidator {
         }
         boolean containFigure = false;
         boolean containSpecialSymbol = false;
-        for (int i = 0; i < password.length(); i++) {
-            if (Character.isDigit(password.charAt(i))) {
+        for (char symbol: password.toCharArray()) {
+            if (Character.isDigit(symbol)) {
                 containFigure = true;
             }
-            if (!Character.isLetterOrDigit(password.charAt(i)) && !Character.isWhitespace(password.charAt(i))) {
+            if (!Character.isLetterOrDigit(symbol) && !Character.isWhitespace(symbol)) {
                 containSpecialSymbol = true;
             }
             if (containFigure && containSpecialSymbol) {
