@@ -15,12 +15,9 @@ public class CatManager {
     }
 
     public static void main(String[] args) {
-        // в массив родителя добавляем наследника
         Object[] objects = new Object[1];
         objects[0] = new String("str");
 
-        // в массив наследника добавляем родителя - ошибка!
         String[] strings = new String[1];
-        //strings[0] = new Object();
     }
 }
