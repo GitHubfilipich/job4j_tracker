@@ -11,7 +11,6 @@ public class CatManager {
 
     void addCatttys() {
         cattys[0] = new Catty();
-        //cattys[0] = new Cat();
     }
 
     public static void main(String[] args) {
