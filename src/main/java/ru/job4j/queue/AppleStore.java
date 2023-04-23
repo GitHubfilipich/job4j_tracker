@@ -17,10 +17,7 @@ public class AppleStore {
         String name = null;
         for (int i = 0; i < count; i++) {
             Customer customer = queue.poll();
-            if (customer == null) {
-                break;
-            }
-            name = customer.name();
+            name = customer != null ? customer.name() : name;
         }
         return name;
     }
