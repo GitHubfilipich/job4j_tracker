@@ -17,8 +17,7 @@ public class AppleStore {
         String name = null;
         int size = queue.size();
         for (int i = 0; i < count && i < size; i++) {
-            Customer customer = queue.poll();
-            name = customer.name();
+            name = queue.poll().name();
         }
         return name;
     }
