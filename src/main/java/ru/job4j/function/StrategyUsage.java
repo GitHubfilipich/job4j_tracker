@@ -1,5 +1,7 @@
 package ru.job4j.function;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -57,5 +59,20 @@ public class StrategyUsage {
                         str -> str.trim(), "    aBC dEfghK Lmnp RstU        "
                 )
         );
+
+        String[] names = {
+                "Ivan",
+        };
+        Comparator<String> lengthCmp = (left, right) -> {
+            System.out.println("execute comparator");
+            return Integer.compare(left.length(), right.length());
+        };
+        Arrays.sort(names, lengthCmp);
+
+        String[] names2 = {
+                "Ivan",
+                "Petr"
+        };
+        Arrays.sort(names2, lengthCmp);
     }
 }
