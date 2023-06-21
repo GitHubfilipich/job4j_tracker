@@ -42,5 +42,10 @@ public class StreamUsage {
                 task -> task.spent
         ).reduce(0L, Long::sum);
         System.out.println(total);
+
+        tasks.stream()
+                .filter(task -> task.name.contains("Bug"))
+                .map(task -> task.name)
+                .forEach(System.out::println);
     }
 }
