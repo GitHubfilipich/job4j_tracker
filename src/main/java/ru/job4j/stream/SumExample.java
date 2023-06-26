@@ -17,5 +17,19 @@ public class SumExample {
                 .mapToInt(Person::getAge)
                 .sum();
         System.out.println(sum);
+
+        List.of(5, 1, 2).forEach(System.out::print);
+
+        Set.of(5, 1, 2).forEach(System.out::print);
+
+        Map.of("first", 1, "second", 2)
+                .forEach((v, k) -> System.out.println(v + " " + k));
+
+        List<Integer> expect = Arrays.asList(1, 2, 3);
+        expect.set(0, 22);
+        expect.forEach(System.out::println);
+
+        List<Integer> expect1 = List.of(1, 2, 3);
+        expect.forEach(System.out::println);
     }
 }
