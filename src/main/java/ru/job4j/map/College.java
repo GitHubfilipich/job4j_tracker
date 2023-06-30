@@ -1,6 +1,7 @@
 package ru.job4j.map;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class College {
@@ -11,24 +12,19 @@ public class College {
         this.students = students;
     }
 
-    public Student findByAccount(String account) {
+    public Optional<Student> findByAccount(String account) {
         return students.keySet()
                 .stream()
                 .filter(s -> s.account().equals(account))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
-    public Subject findBySubjectName(String account, String name) {
-        Student a = findByAccount(account);
-        if (a != null) {
-            return students.get(a)
-                    .stream()
-                    .filter(s -> s.name().equals(name))
-                    .findFirst()
-                    .orElse(null);
-        }
-        return null;
+    public Optional<Subject> findBySubjectName(String account, String name) {
+        return findByAccount(account)
+                .flatMap(a -> students.get(a)
+                        .stream()
+                        .filter(s -> s.name().equals(name))
+                        .findFirst());
     }
 
     public static void main(String[] args) {
@@ -39,9 +35,9 @@ public class College {
                 )
         );
         College college = new College(students);
-        Student student = college.findByAccount("000001");
-        System.out.println("Найденный студент: " + student);
-        Subject english = college.findBySubjectName("000001", "English");
-        System.out.println("Оценка по найденному предмету: " + english.score());
+        var student = college.findByAccount("000001");
+        System.out.println("Найденный студент: " + student.orElse(null));
+        var english = college.findBySubjectName("000001", "English");
+        System.out.println("Оценка по найденному предмету: " + english.map(Subject::score).orElse(null));
     }
 }
