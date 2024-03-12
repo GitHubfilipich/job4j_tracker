@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.job4j</groupId>
-    <artifactId>tracker</artifactId>
+    <artifactId>memTracker</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -39,6 +39,11 @@
             <artifactId>assertj-core</artifactId>
             <version>3.23.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.0</version>
         </dependency>
     </dependencies>
 
@@ -83,10 +88,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>tracker</finalName>
+                            <finalName>memTracker</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.job4j.tracker.StartUI</mainClass>
+                                    <mainClass>ru.job4j.memTracker.StartUI</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
