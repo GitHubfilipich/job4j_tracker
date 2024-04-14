@@ -1,0 +1,40 @@
+Использовалась утилита JConsole
+Анализ использования памяти Heap
+
+Используется Garbage collector: G1
+
+Метод main класса StartUI (после запуска программы):
+Used: 20 480 kbytes
+Committed: 260 096 kbytes
+Max: 4 139 008 kbytes
+GC time: 0,000 seconds on G1 Young Generation (0 collections)
+        0,000 seconds on G1 Old Generation (0 collections)
+
+Метод execute класса CreateManyItems (после создания 1 000 000 заявок):
+Used: 196 108 kbytes
+Committed: 655 360 kbytes
+Max: 4 139 008 kbytes
+GC time: 0,089 seconds on G1 Young Generation (7 collections)
+        0,000 seconds on G1 Old Generation (0 collections)
+
+Метод execute класса FindAllAction (показать все заявки):
+Used: 433 344 kbytes
+Committed: 655 360 kbytes
+Max: 4 139 008 kbytes
+GC time: 0,107 seconds on G1 Young Generation (11 collections)
+        0,000 seconds on G1 Old Generation (0 collections)
+
+Метод execute класса DeleteAllItems (после удаления всех заявок):
+Used: 466 112 kbytes
+Committed: 655 360 kbytes
+Max: 4 139 008 kbytes
+GC time: 0,107 seconds on G1 Young Generation (11 collections)
+        0,000 seconds on G1 Old Generation (0 collections)
+
+Метод execute класса CreateManyItems (после создания 1 000 000 000 заявок - выход за пределы памяти):
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+Used: 3 822 022 kbytes
+Committed: 4 139 008 kbytes
+Max: 4 139 008 kbytes
+GC time: 2,036 seconds on G1 Young Generation (69 collections)
+        7,733 seconds on G1 Old Generation (7 collections)
