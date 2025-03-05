@@ -24,28 +24,29 @@ public class HbmTracker implements Store, AutoCloseable {
             return item;
         } catch (Exception e) {
             session.getTransaction().rollback();
-            return null;
+        } finally {
+            session.close();
         }
+        return null;
     }
 
     @Override
     public boolean replace(int id, Item item) {
-        boolean result = false;
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            Item persistItem = session.get(Item.class, id);
-            if (persistItem != null) {
-                persistItem.setName(item.getName());
-                persistItem.setCreated(item.getCreated());
-                session.save(persistItem);
-                session.getTransaction().commit();
-                result = true;
-            }
+            int numUpdated = session.createQuery("UPDATE Item SET name = :fName, created = :fCreated WHERE id = :fId")
+                    .setParameter("fName", item.getName())
+                    .setParameter("fCreated", item.getCreated())
+                    .setParameter("fId", id)
+                    .executeUpdate();
+            return numUpdated > 0;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
-        return result;
+        return false;
     }
 
     @Override
@@ -53,34 +54,39 @@ public class HbmTracker implements Store, AutoCloseable {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            Item item = new Item();
-            item.setId(id);
-            session.delete(item);
+            session.createQuery("DELETE Item WHERE id = :fId")
+                    .setParameter("fId", id)
+                    .executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
     @Override
     public List<Item> findAll() {
-        Session session = sf.openSession();
-        return session.createQuery("from Item", Item.class)
-                .list();
+        try (Session session = sf.openSession()) {
+            return session.createQuery("from Item", Item.class)
+                    .list();
+        }
     }
 
     @Override
     public List<Item> findByName(String key) {
-        Session session = sf.openSession();
+        try (Session session = sf.openSession()) {
         return session.createQuery("from Item WHERE name LIKE :fName", Item.class)
                 .setParameter("fName", "%" + key + "%")
                 .list();
+        }
     }
 
     @Override
     public Item findById(int id) {
-        Session session = sf.openSession();
-        return session.get(Item.class, id);
+        try (Session session = sf.openSession()) {
+            return session.get(Item.class, id);
+        }
     }
 
     @Override
