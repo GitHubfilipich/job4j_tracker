@@ -25,9 +25,9 @@ public class DateRun {
             var item = new Item();
             item.setName("check timezone new Europe/Moscow");
             LocalDateTime nowUtc = ZonedDateTime
-                    .now(ZoneId.systemDefault())       // локальная зона
-                    .now(ZoneId.of("Europe/Moscow"))       // выбранная зона
-                    .withZoneSameInstant(ZoneId.of("UTC")) // переводим в UTC
+                    .now(ZoneId.systemDefault())
+                    .now(ZoneId.of("Europe/Moscow"))
+                    .withZoneSameInstant(ZoneId.of("UTC"))
                     .toLocalDateTime();
             item.setCreated(nowUtc);
             session.persist(item);
@@ -46,14 +46,11 @@ public class DateRun {
                 System.out.println(ZonedDateTime.of(it.getCreated(),
                         ZoneId.of("America/Los_Angeles")));
                 nowUtc = ZonedDateTime
-                        .now(ZoneId.systemDefault())       // локальная зона
-                        .withZoneSameInstant(ZoneId.of("UTC")) // переводим в UTC
+                        .now(ZoneId.systemDefault())
+                        .withZoneSameInstant(ZoneId.of("UTC"))
                         .toLocalDateTime();
-                // Считаем, что время сохранено в UTC:
                 ZonedDateTime utcZoned = it.getCreated().atZone(ZoneId.of("UTC"));
-                // Переводим в зону пользователя, например, Europe/Moscow
                 ZonedDateTime userZoned = utcZoned.withZoneSameInstant(ZoneId.of("Europe/Moscow"));
-                // Если нужно снова получить LocalDateTime для отображения:
                 LocalDateTime displayTime = userZoned.toLocalDateTime();
                 String zoneId = "Europe/Moscow";
                 System.out.println(zoneId + " : " + it.getCreated().atZone(ZoneId.of("UTC")).
