@@ -8,7 +8,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class DateRun {
@@ -18,21 +17,21 @@ public class DateRun {
         try (var sf = new MetadataSources(registry)
                 .buildMetadata().buildSessionFactory()) {
             var session = sf
-                    /*.withOptions()
-                    .jdbcTimeZone(TimeZone.getTimeZone("America/Los_Angeles"))*/
+                    .withOptions()
+                    .jdbcTimeZone(TimeZone.getTimeZone("America/Los_Angeles"))
                     .openSession();
 
-            /*session.beginTransaction();
+            session.beginTransaction();
             var item = new Item();
             item.setName("check timezone new Europe/Moscow");
             LocalDateTime nowUtc = ZonedDateTime
                     .now(ZoneId.systemDefault())       // локальная зона
-                    *//*.now(ZoneId.of("Europe/Moscow"))       // выбранная зона*//*
+                    .now(ZoneId.of("Europe/Moscow"))       // выбранная зона
                     .withZoneSameInstant(ZoneId.of("UTC")) // переводим в UTC
                     .toLocalDateTime();
             item.setCreated(nowUtc);
             session.persist(item);
-            session.getTransaction().commit();*/
+            session.getTransaction().commit();
 
             var stored = session.createQuery(
                     "from Item", Item.class
@@ -44,18 +43,18 @@ public class DateRun {
                         ZoneId.of("UTC+10")
                 ).format(DateTimeFormatter.ofPattern("HH:mm yyyy-MM-dd"));
                 System.out.println(time);
-                /*System.out.println(ZonedDateTime.of(it.getCreated(),
-                        ZoneId.of("America/Los_Angeles")));*/
-                /*LocalDateTime nowUtc = ZonedDateTime
+                System.out.println(ZonedDateTime.of(it.getCreated(),
+                        ZoneId.of("America/Los_Angeles")));
+                nowUtc = ZonedDateTime
                         .now(ZoneId.systemDefault())       // локальная зона
                         .withZoneSameInstant(ZoneId.of("UTC")) // переводим в UTC
-                        .toLocalDateTime();*/
-                /*// Считаем, что время сохранено в UTC:
+                        .toLocalDateTime();
+                // Считаем, что время сохранено в UTC:
                 ZonedDateTime utcZoned = it.getCreated().atZone(ZoneId.of("UTC"));
                 // Переводим в зону пользователя, например, Europe/Moscow
                 ZonedDateTime userZoned = utcZoned.withZoneSameInstant(ZoneId.of("Europe/Moscow"));
                 // Если нужно снова получить LocalDateTime для отображения:
-                LocalDateTime displayTime = userZoned.toLocalDateTime();*/
+                LocalDateTime displayTime = userZoned.toLocalDateTime();
                 String zoneId = "Europe/Moscow";
                 System.out.println(zoneId + " : " + it.getCreated().atZone(ZoneId.of("UTC")).
                         withZoneSameInstant(ZoneId.of(zoneId)).
@@ -67,7 +66,7 @@ public class DateRun {
             }
             session.close();
 
-            /*var zones = new ArrayList<TimeZone>();
+            var zones = new ArrayList<TimeZone>();
             System.out.println("++++++++++ timeId +++++++++++");
             for (String timeId : TimeZone.getAvailableIDs()) {
                 zones.add(TimeZone.getTimeZone(timeId));
@@ -75,9 +74,9 @@ public class DateRun {
             }
             System.out.println("++++++++++ zone.getID() + \" : \" + zone.getDisplayName() +++++++++++");
             zones.stream().sorted(Comparator.comparing(TimeZone::getID))
-                    .forEachOrdered(timeZone -> System.out.println(timeZone.getID() + " : " + timeZone.getDisplayName()));*/
+                    .forEachOrdered(timeZone -> System.out.println(timeZone.getID() + " : " + timeZone.getDisplayName()));
 
-            var zones = new ArrayList<TimeZone>();
+            zones = new ArrayList<TimeZone>();
             System.out.println("++++++++++ ZoneId.getAvailableZoneIds() +++++++++++");
             for (String timeId : ZoneId.getAvailableZoneIds()) {
                 zones.add(TimeZone.getTimeZone(timeId));
@@ -86,9 +85,9 @@ public class DateRun {
 
             printZones();
 
-            /*for (TimeZone zone : zones) {
+            for (TimeZone zone : zones) {
                 System.out.println(zone.getID() + " : " + zone.getDisplayName());
-            }*/
+            }
 
             System.out.println("+++++++++ TimeZone.getDefault(); ++++++++++++++");
             var defTz = TimeZone.getDefault();
