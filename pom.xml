@@ -13,13 +13,20 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <docker_db_url_jdbc>${JDBC_URL}</docker_db_url_jdbc>
     </properties>
 
     <profiles>
         <profile>
             <id>test</id>
             <properties>
-                <liquibase.config>src/main/resources/db/liquibase_test.properties</liquibase.config>
+                <liquibase.changeLogFile>db/dbchangelog.xml</liquibase.changeLogFile>
+                <liquibase.url>jdbc:h2:./testdb;MODE=PostgreSQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE;</liquibase.url>
+                <liquibase.username></liquibase.username>
+                <liquibase.password></liquibase.password>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -28,7 +35,19 @@
         <profile>
             <id>production</id>
             <properties>
-                <liquibase.config>src/main/resources/db/liquibase.properties</liquibase.config>
+                <liquibase.changeLogFile>db/dbchangelog.xml</liquibase.changeLogFile>
+                <liquibase.url>jdbc:postgresql://127.0.0.1:5432/tracker</liquibase.url>
+                <liquibase.username>postgres</liquibase.username>
+                <liquibase.password>password</liquibase.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <liquibase.changeLogFile>db/dbchangelog.xml</liquibase.changeLogFile>
+                <liquibase.url>${docker_db_url_jdbc}</liquibase.url>
+                <liquibase.username>postgres</liquibase.username>
+                <liquibase.password>password</liquibase.password>
             </properties>
         </profile>
     </profiles>
@@ -183,7 +202,10 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>4.23.1</version>
                 <configuration>
-                    <propertyFile>${liquibase.config}</propertyFile>
+                    <changeLogFile>${liquibase.changeLogFile}</changeLogFile>
+                    <url>${liquibase.url}</url>
+                    <username>${liquibase.username}</username>
+                    <password>${liquibase.password}</password>
                 </configuration>
                 <executions>
                     <execution>
