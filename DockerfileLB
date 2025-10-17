@@ -1,0 +1,9 @@
+FROM maven:3.6.3-openjdk-17
+
+RUN mkdir job4j_SQLTracker
+
+WORKDIR job4j_SQLTracker
+
+COPY . .
+
+CMD ["mvn", "liquibase:update", "-Pdocker"]
