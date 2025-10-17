@@ -22,7 +22,7 @@ services:
         - JDBC_DRIVER=org.postgresql.Driver
       container_name: lb
       volumes:
-        - ./db:/liquibase/changelog
+        - ./src/main/resources:/job4j_SQLTracker/src/main/resources
       depends_on:
         - db
   job4j_tracker:
