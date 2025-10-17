@@ -21,6 +21,8 @@ services:
         - JDBC_PASSWORD=password
         - JDBC_DRIVER=org.postgresql.Driver
       container_name: lb
+      volumes:
+        - ./db:/liquibase/changelog
       depends_on:
         - db
   job4j_tracker:
