@@ -139,10 +139,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>memTracker</finalName>
+                            <finalName>SQLTracker</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>ru.job4j.memTracker.StartUI</mainClass>
+                                    <mainClass>ru.job4j.tracker.StartUI</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
