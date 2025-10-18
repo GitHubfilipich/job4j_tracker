@@ -10,4 +10,4 @@ RUN mvn package -Dmaven.test.skip=true
 
 CMD ["mvn", "liquibase:update", "-Pdocker"]
 
-CMD ["java", "-jar", "target/SQLTracker.jar"]
+CMD ["java", "-jar", "target/Tracker.jar"]
