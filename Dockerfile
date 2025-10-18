@@ -8,6 +8,6 @@ COPY . .
 
 RUN mvn package -Dmaven.test.skip=true
 
-CMD ["mvn", "liquibase:update", "-Pdocker"]
+RUN chmod +x entrypoint.sh
 
-CMD ["java", "-jar", "target/Tracker.jar"]
+CMD ["./entrypoint.sh"]
