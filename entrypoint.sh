@@ -1,3 +1,3 @@
 #!/bin/sh
 mvn liquibase:update -Pdocker
-java -jar target/Tracker.jar
+java  -jar target/Tracker.jar
