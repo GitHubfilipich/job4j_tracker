@@ -51,7 +51,18 @@ public class StartUI {
                     new FindByNameAction(output),
                     new ExitAction(output)
             );
-            new StartUI(output).init(input, tracker, actions);
+            boolean serverMode = args != null && args.length > 0 && "--server".equals(args[0]);
+            if (serverMode) {
+                int port = 7000;
+                RestServer server = new RestServer(tracker, port);
+                output.println("REST server started on port " + port);
+                 /*Можно добавить shutdown hook:*/
+                Runtime.getRuntime().addShutdownHook(new Thread(server::stop));
+                 /*Блокируем поток, чтобы приложение не завершилось:*/
+                Thread.currentThread().join();
+            } else {
+                new StartUI(output).init(input, tracker, actions);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
